@@ -40,11 +40,14 @@
                   v-model="allSelectedData"
                 >#</b-form-checkbox>
               </th>
-              <th class="text-capitalize">Image</th>
-              <th class="text-capitalize">Product Name</th>
-              <th class="text-capitalize">Sale Price</th>
-              <th class="text-capitalize">Stock</th>
-              <th class="text-capitalize">Category</th>
+              <th class="text-capitalize">Product</th>
+              <th class="text-capitalize">Quantity.</th>
+              <th class="text-capitalize">Order NO.</th>
+              <th class="text-capitalize">Payment Date</th>
+              <!-- <th class="text-capitalize">Payment Type</th> -->
+              <th class="text-capitalize">Payment Amount</th>
+              <!-- <th class="text-capitalize">Stock</th> -->
+              <!-- <th class="text-capitalize">Category</th> -->
               <th class="text-capitalize">Status</th>
               <th class="text-capitalize">Action</th>
             </tr>
@@ -52,7 +55,7 @@
           <tbody v-if="lists && lists.length">
             <tr :key="index" v-for="(list, index) in lists">
               <td>
-                <pre>{{list}}</pre>
+                <!-- <pre>{{list}}</pre> -->
                 <b-form-checkbox
                   @change="selectCheckBox(list.id, !list.is_selected  )"
                   v-model="list.is_selected"
@@ -61,29 +64,32 @@
 
               <td>
                 <img
-                  style="min-height: 120px; min-width: 120px;
-max-height: 120px; max-width: 120px"
+                  style="min-height: 120px; min-width: 120px; max-height: 120px; max-width: 120px"
                   v-bind:alt="list.name"
                   v-bind:src="list.stock_inventory.images[0]"
                   v-if="list.stock_inventory && list.stock_inventory.images && list.stock_inventory.images[0]"
                 />
               </td>
+              <td>
+                <small class="font-bold">{{ list.order_date || '-' }}</small>
+              </td>
+              <td>
+                <small class="font-bold">{{ list.order_date || '-' }}</small>
+              </td>
+              <td>
+                <small class="font-bold">{{ (list.transaction_type )|| '-' }}</small>
+              </td>
+              <td>
+                <small class="font-bold">{{ (list.total_amount )|| '-' }}</small>
+              </td>
+              <td>
+                <small class="font-bold">{{ (list.status )|| '-' }}</small>
+              </td>
 
-              <td>
-                <small class="font-bold">{{ list.name || '-' }}</small>
-              </td>
-              <td>
-                <!-- <small class="font-bold">{{ (list.stock_inventory.sale_price )|| '-' }}</!-->
-                -->
-              </td>
-              <td>
-                <!-- <small class="font-bold">{{ (list.stock_inventory.stock_available )|| '-' }}</small> -->
-              </td>
-
-              <td>
-                <!-- <small class="font-bold">{{ list.category.name || '-' }}</small> -->
-              </td>
-              <td>
+              <!-- <td>
+                <small class="font-bold">{{ list.category.name || '-' }}</small>
+              </td>-->
+              <!-- <td>
                 <span @click="statusChange('is_active', !list.is_active, list.id)" class="p-0 m-0">
                   <switches
                     color="green"
@@ -93,7 +99,7 @@ max-height: 120px; max-width: 120px"
                     v-model="list.is_active"
                   />
                 </span>
-              </td>
+              </td>-->
               <td>
                 <router-link
                   :to="'/edit-product/' + list.id"
