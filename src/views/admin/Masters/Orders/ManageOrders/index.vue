@@ -13,25 +13,35 @@
         add_route="/add-product"
       />
 
-      <div class="breadcrumb col-md-12 col-sm-12 col-xs-10 mt-2 mb-2 p-2">
-        <div class="font-weight-bold">
-          <!-- <label for="title name" class="text-capitalize" v-for="(item, index) in statusTabs" :key="index" >{{  item.name }}</label> -->
-          <button
+      <!-- <div class="breadcrumb col-md-12 col-sm-12 col-xs-10 mt-2 mb-2 p-2"> -->
+      <!-- <div class="font-weight-bold">
+           <button
             :class="{ 'tab-content' :  currentTab == item.name }"
             class="text-capitalize btn"
             @click="currentTab = item.name "
             v-for="(item, index) in statusTabs"
             :key="index"
           >{{ item.name }}</button>
-        </div>
-      </div>
+      </div>-->
+      <!-- </div> -->
 
       <!-- :add_route="$route.path + '-add'" -->
       <!-- <pre>{{lists}}</pre> -->
-      <div class="card card-body" v-if="lists && lists.length">
-        <table
-          class="table table-hover table-responsive-sm col-lg-12 col-md-12 col-sm-12 col-xs-12"
-        >
+      <div class="card card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item" v-for="(item, index) in statusTabs" :key="index">
+            <a
+              @click="currentTab = item.id "
+              class="nav-link"
+              :class="{ 'active' :  currentTab ==  item.id }"
+              href="#"
+            >{{ item.name }}</a>
+          </li>
+        </ul>
+        <!-- <pre>{{currentTab}}</pre> -->
+
+        <table class="table mt-4" v-if="lists && lists.length">
+          <!-- table-hover table-responsive-sm col-lg-12 col-md-12 col-sm-12 col-xs-12 -->
           <thead>
             <tr>
               <th nowrap>
@@ -40,12 +50,15 @@
                   v-model="allSelectedData"
                 >#</b-form-checkbox>
               </th>
-              <th class="text-capitalize">Product</th>
+              <th class="text-capitalize no-wrap" style="width: 308px;">Product</th>
               <th class="text-capitalize">Quantity.</th>
-              <th class="text-capitalize">Order NO.</th>
-              <th class="text-capitalize">Payment Date</th>
+              <!-- <th class="text-capitalize col-1">Order NO.</th> -->
+              <th class="text-capitalize">Order Date</th>
+              <th class="text-capitalize">Order expected Date</th>
+              <th class="text-capitalize">Payment Method</th>
+              <!-- <th class="text-capitalize col-1">Payment Date</th> -->
               <!-- <th class="text-capitalize">Payment Type</th> -->
-              <th class="text-capitalize">Payment Amount</th>
+              <th class="text-capitalize">Total Payment Amount</th>
               <!-- <th class="text-capitalize">Stock</th> -->
               <!-- <th class="text-capitalize">Category</th> -->
               <th class="text-capitalize">Status</th>
@@ -61,20 +74,77 @@
                   v-model="list.is_selected"
                 >{{ ((page * limit) - (limit - (index + 1)) ) }}</b-form-checkbox>
               </td>
-
+              <td colspan="2" class="pr-0 py-1">
+                <table class="w-100">
+                  <tr class>
+                    <td class="td-product border-0 px-0 py-2" style="width: 292px;">
+                      <div data-v-12f0b410 class="d-flex">
+                        <!-- style="min-height: 120px; min-width: 120px; max-height: 120px; max-width: 120px" -->
+                        <img
+                          class="fill rounded flex-shrink-0"
+                          height="120"
+                          width="120"
+                          v-bind:alt="list.product_details.name"
+                          v-bind:src="list.product_details.image"
+                          v-if="list.product_details  && list.product_details.image  "
+                        />
+                        <!-- <img
+                          data-v-799b6c77
+                          data-v-12f0b410
+                          width="100"
+                          height="100"
+                          src="https://img1.cfcdn.club/fe/e2/fe2f7866859ea21cc3ec2ab6976055e2.jpg"
+                          alt="thumbnail"
+                          referrerpolicy="no-referrer"
+                          class="fill rounded flex-shrink-0"
+                        />-->
+                        <div
+                          data-v-12f0b410
+                          class="product-info ml-2 font-sm d-flex flex-column justify-content-between"
+                          style="width: 200px; min-width: 200px;"
+                        >
+                          <p
+                            class="font-weight-bold"
+                            v-if="list.product_details.name"
+                          >{{list.product_details.name}}</p>
+                          <div>
+                            <p v-if="list.product_details.size">Size: {{list.product_details.size}}</p>
+                            <p
+                              v-if="list.product_details.color_name"
+                            >Color: {{list.product_details.color_name}}</p>
+                            <p
+                              v-if="list.product_details.sale_price"
+                            >Price: {{list.product_details.sale_price}}</p>
+                            <!-- <p data-v-12f0b410>Seller SKU: Fitz_R85</p>
+                            <p data-v-12f0b410>SKU: Color: Multicolor</p>
+                            <p data-v-12f0b410>Product Original Amount: ₹ 879.92</p>-->
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="td-product pl-0 border-0">1</td>
+                  </tr>
+                </table>
+              </td>
+              <!-- <td>
+                <div class="pull-left mr-2">
+                  <img
+                    style="min-height: 120px; min-width: 120px; max-height: 120px; max-width: 120px"
+                    v-bind:alt="list.product_details.name"
+                    v-bind:src="list.product_details.image"
+                    v-if="list.product_details  && list.product_details.image  "
+                  />
+                </div> 
+              </td>-->
+              <!-- <td>
+                <small class="font-bold">{{ list.quantity || '-' }}</small>
+              </td>-->
               <td>
-                <img
-                  style="min-height: 120px; min-width: 120px; max-height: 120px; max-width: 120px"
-                  v-bind:alt="list.name"
-                  v-bind:src="list.stock_inventory.images[0]"
-                  v-if="list.stock_inventory && list.stock_inventory.images && list.stock_inventory.images[0]"
-                />
+                <small class="font-bold">{{ (list.order_date ) || '-' }}</small>
+                <!-- | 'formatDate' -->
               </td>
               <td>
-                <small class="font-bold">{{ list.order_date || '-' }}</small>
-              </td>
-              <td>
-                <small class="font-bold">{{ list.order_date || '-' }}</small>
+                <small class="font-bold">{{ list.expected_date || '-' }}</small>
               </td>
               <td>
                 <small class="font-bold">{{ (list.transaction_type )|| '-' }}</small>
@@ -101,13 +171,13 @@
                 </span>
               </td>-->
               <td>
-                <router-link
+                <!-- <router-link
                   :to="'/edit-product/' + list.id"
                   class="text-primary p-0"
                   v-b-tooltip.hover.left="'Edit ' + list.name"
                 >
                   <i class="fa fa-edit fa-2x fa-2x" />
-                </router-link>
+                </router-link>-->
                 <!--              <a-->
                 <!--                @click="getDetails(list.id)"      -->
                 <!--                class="text-primary p-0"-->
@@ -116,13 +186,44 @@
                 <!--                <i class="fa fa-edit fa-2x"/>-->
                 <!--              </a>-->
 
-                <a
+                <!-- <a
                   @click="deleteConfirmation(list)"
                   class="link text-danger p-0 ml-1"
                   v-b-tooltip.hover.left="'Delete ' + list.name"
                 >
                   <i class="fa fa-trash fa-2x" />
-                </a>
+                </a>-->
+
+                <!-- <br /> -->
+                <!-- Example single danger button -->
+                <div class="dropdown">
+                  <a
+                    class="btn btn-behance btn-sm dropdown-toggle"
+                    href="#"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                  >Actions</a>
+
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <!-- <a class="dropdown-item" href="#"> -->
+                    <li class="m-2">
+                      <button class="btn btn-success btn-sm m-1">Approve</button>
+                      <button class="btn btn-danger btn-sm m-1">Reject</button>
+                    </li>
+                    <!-- </a> -->
+                    <!-- <li class="m-2"> -->
+                    <a v-if="0" class="dropdown-item" href="#">Request for Shipment</a>
+                    <!-- </li> -->
+                    <!-- <li class="m-2"> -->
+                    <a v-if="0" class="dropdown-item" href="#">Generate a Lable</a>
+                    <!-- </li> -->
+
+                    <a v-if="0" class="dropdown-item" href="#">Generate a Mainfest</a>
+                    <!-- <a class="dropdown-item" href="#">One more item</a> -->
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -408,11 +509,6 @@ export default {
   data: function() {
     return {
       currentTab: null,
-      statusTabsConstant: {
-        DASHBOARD: "DASHBOARD",
-        USER_LIST: "USER LIST",
-        CONTROL: "CONTROL"
-      },
       statusTabs: [],
 
       baseURL: baseURL,
@@ -442,9 +538,10 @@ export default {
     this.getCategoryList(); // categories_list
   },
   beforeMount() {
-    _.each(Constants.DashboardTabs, (key, val) => {
-      this.statusTabs.push({ name: key, id: val });
+    _.each(Constants.OrderStatusTabs, (key, val) => {
+      this.statusTabs.push({ name: key.replace(/_/g, " "), id: val });
     });
+    console.log("All tabs", this.statusTabs);
     /** set default to dashboard */
     this.currentTab = this.setDefaultTab();
 
@@ -847,6 +944,9 @@ export default {
         // ],
         // category_list: ["id", "name"]
       };
+      if (this.currentTab) {
+        request.status = this.currentTab;
+      }
 
       /** if search found then send to request */
       if (search && search.length > 0) {
@@ -883,6 +983,7 @@ export default {
         this.$Progress.fail();
         // Services.notify("e", res.message);
       }
+      console.log("data", this.lists[0]);
     },
     async statusChange(key, value, id) {
       var request = {
@@ -932,6 +1033,9 @@ export default {
     }
   },
   watch: {
+    currentTab: function(val) {
+      this.getAllList();
+    },
     // "detail.name"(newVal) {
     //     if (newVal) {
     //         this.detail.code = this.$_.clone(

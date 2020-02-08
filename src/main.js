@@ -11,6 +11,12 @@ import Vue from 'vue';
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
 
+// Vue.filter('formatDate', function (value) {
+//   if (value) {
+//     return moment(String(value)).format('MM/DD/YYYY hh:mm')
+//   }
+// })
+
 require('./package-injection');
 require('dotenv').config();
 //// To Remove CORS ERROR

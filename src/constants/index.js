@@ -24,4 +24,13 @@ export const Constants = {
         CONTROL: "CONTROL"
     },
 
+    OrderStatusTabs: {
+        PENDING: "PENDING",
+        PACKAGING: "PACKAGING",
+        PICK_UP: "PICK UP",
+        DISPATCH: "DISPATCH",
+        DELIVERED: "DELIVERED",
+        CANCELLED: "CANCELLED",
+        REJECTED: "REJECTED"
+    },
 }; 

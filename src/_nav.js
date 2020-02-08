@@ -18,7 +18,7 @@ export default {
     },
     {
       name: "Orders",
-      url: "/orders",
+      url: "/order/manage-orders",
       icon: "icon-cart",
       badge: {
         variant: 'primary',
