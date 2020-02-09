@@ -24,7 +24,16 @@
                   v-model="allSelectedData"
                 >#</b-form-checkbox>
               </th>
-              <th class="text-capitalize">Name</th>
+              <th class="text-capitalize">pickup_location</th>
+              <th class="text-capitalize">name</th>
+              <th class="text-capitalize">email</th>
+              <th class="text-capitalize">phone</th>
+              <th class="text-capitalize">address</th>
+              <th class="text-capitalize">address 2</th>
+              <th class="text-capitalize">city</th>
+              <th class="text-capitalize">state</th>
+              <th class="text-capitalize">country</th>
+              <th class="text-capitalize">pin code</th>
               <!-- <th class="text-capitalize">Code</th> -->
               <!-- <th class="text-capitalize">Country code</th> -->
               <th class="text-capitalize">Status</th>
@@ -39,15 +48,16 @@
                   v-model="list.is_selected"
                 >{{ ((page * limit) - (limit - (index + 1)) ) }}</b-form-checkbox>
               </td>
-              <td>
-                <small class="font-bold">{{ list.name || '-' }}</small>
-              </td>
-              <!-- <td>
-                <small class="font-bold">{{ (list.code )|| '-' }}</small>
-              </td>-->
-              <!-- <td>
-                <small class="font-bold">{{ (list.country_code )|| '-' }}</small>
-              </td>-->
+              <td class>{{list.pickup_location || '-' }}</td>
+              <td class>{{list.name || '-'}}</td>
+              <td class>{{list.email || '-'}}</td>
+              <td class>{{list.phone || '-'}}</td>
+              <td class>{{list.address || '-'}}</td>
+              <td class>{{list.address_2 || '-'}}</td>
+              <td class>{{list.city || '-'}}</td>
+              <td class>{{list.state || '-'}}</td>
+              <td class>{{list.country || '-'}}</td>
+              <td class>{{list.pin_code || '-'}}</td>
 
               <td>
                 <span class="p-0 m-0" @click="statusChange('is_active', !list.is_active, list.id)">
@@ -312,7 +322,7 @@ export default {
           if (result.value) {
             if (this.selectedIds && this.selectedIds.length) {
               let res = await Services.call(
-                ApiCollections.countries_delete_multiple
+                ApiCollections.pickup_location_delete_multiple
               ).deleteMany(request);
 
               /**
@@ -402,7 +412,9 @@ export default {
 
     /** get details by id */
     async getDetails(id) {
-      let res = await Services.call(ApiCollections.get_countries).getOne(id);
+      let res = await Services.call(ApiCollections.get_pickup_location).getOne(
+        id
+      );
       this.detail = res.data;
       if (res && res.success && res.success == true) {
         this.detail = res.data;
@@ -447,9 +459,9 @@ export default {
         Services.notify("e", "Record details not found");
         return false;
       }
-      let res = await Services.call(ApiCollections.delete_countries).delete(
-        list.id
-      );
+      let res = await Services.call(
+        ApiCollections.delete_pickup_location
+      ).delete(list.id);
       if (res && res.success && res.success == true) {
         var index = this.$_.findIndex(this.lists, { id: list.id });
 
@@ -478,7 +490,7 @@ export default {
     async submitData() {
       this.$Progress.start();
       if (this.detail && this.detail.id) {
-        var apiObject = this.$_.clone(ApiCollections.update_countries);
+        var apiObject = this.$_.clone(ApiCollections.update_pickup_location);
         apiObject.url += this.detail.id;
 
         let res = await Services.call(apiObject).update(this.detail);
@@ -504,9 +516,9 @@ export default {
         }
       } else {
         /** create data */
-        let res = await Services.call(ApiCollections.create_countries).post(
-          this.detail
-        );
+        let res = await Services.call(
+          ApiCollections.create_pickup_location
+        ).post(this.detail);
         /** set data  */
         if (res && res.success && res.success == true) {
           this.lists.unshift(res.data);
@@ -547,9 +559,9 @@ export default {
 
       /** start progress here */
       this.$Progress.start();
-      let res = await Services.call(ApiCollections.countries_listing).post(
-        request
-      );
+      let res = await Services.call(
+        ApiCollections.pickup_location_listing
+      ).post(request);
 
       /** check error or success response */
       if (res && res.success && res.success == true) {
@@ -580,7 +592,7 @@ export default {
       }
 
       let res = await Services.call(
-        ApiCollections.countries_status_change
+        ApiCollections.pickup_location_status_change
       ).post(request);
 
       /** set update data  */

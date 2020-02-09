@@ -26,11 +26,12 @@ export const Constants = {
 
     OrderStatusTabs: {
         PENDING: "PENDING",
-        PACKAGING: "PACKAGING",
-        PICK_UP: "PICK UP",
-        DISPATCH: "DISPATCH",
-        DELIVERED: "DELIVERED",
-        CANCELLED: "CANCELLED",
-        REJECTED: "REJECTED"
+        ACCEPTED: "ACCEPTED",
+        // PACKAGING: "PACKAGING",
+        // PICK_UP: "PICK UP",
+        CANCELED: "CANCELED",
+        // DELIVERED: "Delivered",
+        REJECTED: "REJECTED",
+        RETURNED: "Returned"
     },
 }; 

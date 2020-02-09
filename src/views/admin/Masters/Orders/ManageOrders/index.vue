@@ -33,9 +33,10 @@
             <a
               @click="currentTab = item.id "
               class="nav-link"
-              :class="{ 'active' :  currentTab ==  item.id }"
-              href="#"
-            >{{ item.name }}</a>
+              :class="{ 'active' :  currentTab === item.id }"
+            > {{ item.name }}
+
+            </a>
           </li>
         </ul>
         <!-- <pre>{{currentTab}}</pre> -->
@@ -88,16 +89,7 @@
                           v-bind:src="list.product_details.image"
                           v-if="list.product_details  && list.product_details.image  "
                         />
-                        <!-- <img
-                          data-v-799b6c77
-                          data-v-12f0b410
-                          width="100"
-                          height="100"
-                          src="https://img1.cfcdn.club/fe/e2/fe2f7866859ea21cc3ec2ab6976055e2.jpg"
-                          alt="thumbnail"
-                          referrerpolicy="no-referrer"
-                          class="fill rounded flex-shrink-0"
-                        />-->
+                      
                         <div
                           data-v-12f0b410
                           class="product-info ml-2 font-sm d-flex flex-column justify-content-between"
@@ -106,7 +98,7 @@
                           <p
                             class="font-weight-bold"
                             v-if="list.product_details.name"
-                          >{{list.product_details.name}}</p>
+                          >{{list.product_details.name}}</span>
                           <div>
                             <p v-if="list.product_details.size">Size: {{list.product_details.size}}</p>
                             <p
@@ -115,9 +107,7 @@
                             <p
                               v-if="list.product_details.sale_price"
                             >Price: {{list.product_details.sale_price}}</p>
-                            <!-- <p data-v-12f0b410>Seller SKU: Fitz_R85</p>
-                            <p data-v-12f0b410>SKU: Color: Multicolor</p>
-                            <p data-v-12f0b410>Product Original Amount: ₹ 879.92</p>-->
+                           
                           </div>
                         </div>
                       </div>
@@ -126,19 +116,7 @@
                   </tr>
                 </table>
               </td>
-              <!-- <td>
-                <div class="pull-left mr-2">
-                  <img
-                    style="min-height: 120px; min-width: 120px; max-height: 120px; max-width: 120px"
-                    v-bind:alt="list.product_details.name"
-                    v-bind:src="list.product_details.image"
-                    v-if="list.product_details  && list.product_details.image  "
-                  />
-                </div> 
-              </td>-->
-              <!-- <td>
-                <small class="font-bold">{{ list.quantity || '-' }}</small>
-              </td>-->
+           
               <td>
                 <small class="font-bold">{{ (list.order_date ) || '-' }}</small>
                 <!-- | 'formatDate' -->
@@ -195,6 +173,8 @@
                 </a>-->
 
                 <!-- <br /> -->
+
+                <!-- <pre> {{ statusTabs }} - {{ OrderStatusTabs }}</pre> -->
                 <!-- Example single danger button -->
                 <div class="dropdown">
                   <a
@@ -209,8 +189,22 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <!-- <a class="dropdown-item" href="#"> -->
                     <li class="m-2">
-                      <button class="btn btn-success btn-sm m-1">Approve</button>
-                      <button class="btn btn-danger btn-sm m-1">Reject</button>
+                      <button
+                        v-if="OrderStatusTabs.PENDING === currentTab"
+                        class="btn btn-success btn-sm m-1"
+                        @click="statusChange('status', OrderStatusTabs.ACCEPTED, list.id)"
+                      >Approve</button>
+                      <button
+                        v-if="OrderStatusTabs.PENDING === currentTab"
+                        class="btn btn-danger btn-sm m-1"
+                        @click="statusChange('status', OrderStatusTabs.REJECTED, list.id)"
+                      >Reject</button>
+
+                      <button
+                        v-if="OrderStatusTabs.REJECTED === currentTab"
+                        class="btn btn-info btn-sm m-1"
+                        @click="statusChange('status', OrderStatusTabs.PENDING, list.id)"
+                      >Move to Pending</button>
                     </li>
                     <!-- </a> -->
                     <!-- <li class="m-2"> -->
@@ -286,208 +280,6 @@
         <i class="fa fa-warning mr-3"></i>No Data Found
       </div>
     </div>
-
-    <b-modal
-      :noCloseOnBackdrop="true"
-      :noCloseOnEsc="true"
-      :okDisabled="!!errors.any()"
-      :title="((  detail &&  detail.id  ) ? 'Edit ' : 'Add '  )  + $route.name   "
-      @close="clearAllData(); showModal = false"
-      @ok="submitData"
-      id="modal-lg"
-      name="addEditForm"
-      okTitle="Save"
-      size="lg"
-      v-model="showModal"
-    >
-      <form class="row" enctype="multipart/form-data" method="post" name="addEditForm" novalidate>
-        <div class="input-group mb-3 col-md-6">
-          <label class="text-capitalize ml-3" for="name">
-            name
-            <small
-              :class="!detail.name || errors.has('name') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <input
-              :class="{ 'is-invalid': errors.has('name') }"
-              class="form-control"
-              id="name"
-              name="name"
-              placeholder="Enter name"
-              required
-              type="text"
-              v-model="detail.name"
-              v-validate="'required'"
-            />
-          </div>
-          <small class="text-danger mt-1" v-if="errors.has('name')">{{ errors.first('name') }}</small>
-        </div>
-
-        <div class="input-group mb-3 col-md-6">
-          <label class="text-capitalize ml-3" for="category">
-            category
-            <small
-              :class="!detail.category || errors.has('category') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <!--  @change="changePageLimits($event)" -->
-            <select class="form-control" v-model="detail.category_id">
-              <option
-                :key="index"
-                :value="list.id"
-                v-for="(list, index) in category_list"
-                v-show="category_list && category_list.length"
-              >{{list.name}}</option>
-
-              <option
-                selected="true"
-                v-if="!category_list || !category_list.length"
-              >No any category found</option>
-            </select>
-          </div>
-          <small
-            class="text-danger mt-1"
-            v-if="errors.has('category')"
-          >{{ errors.first('category') }}</small>
-        </div>
-
-        <div class="input-group mb-3 col-md-6">
-          <label class="text-capitalize ml-3" for="price">
-            price
-            <small
-              :class="!detail.price || errors.has('price') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <input
-              :class="{ 'is-invalid': errors.has('price') }"
-              class="form-control"
-              id="price"
-              name="price"
-              placeholder="Enter price"
-              required
-              type="text"
-              v-model="detail.price"
-              v-validate="'required|numeric'"
-            />
-          </div>
-          <small class="text-danger mt-1" v-if="errors.has('price')">{{ errors.first('price') }}</small>
-        </div>
-
-        <div class="input-group mb-3 col-md-6">
-          <label class="text-capitalize ml-3" for="size">
-            size
-            <small
-              :class="!detail.size || errors.has('size') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <input
-              :class="{ 'is-invalid': errors.has('size') }"
-              class="form-control"
-              id="size"
-              name="size"
-              placeholder="Enter size "
-              required
-              type="text"
-              v-model="detail.size"
-              v-validate="'required'"
-            />
-          </div>
-          <small class="text-danger mt-1" v-if="errors.has('size')">{{ errors.first('size') }}</small>
-        </div>
-
-        <div class="input-group mb-3 col-md-6">
-          <label class="text-capitalize ml-3" for="color">
-            size number
-            <small
-              :class="!detail.color || errors.has('color') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <input
-              :class="{ 'is-invalid': errors.has('color') }"
-              class="form-control"
-              id="color"
-              name="color"
-              placeholder="Enter size number (Ex. 14.5-15)"
-              required
-              type="text"
-              v-model="detail.color"
-              v-validate="'required'"
-            />
-          </div>
-          <small class="text-danger mt-1" v-if="errors.has('color')">{{ errors.first('color') }}</small>
-        </div>
-
-        <div class="input-group mb-3 col-md-12">
-          <label class="text-capitalize ml-3" for="description">
-            Description
-            <small
-              :class="!detail.description || errors.has('description') ? 'text-danger' : 'text-success' "
-            >*</small>
-          </label>
-          <div class="input-group">
-            <textarea
-              :class="{ 'is-invalid': errors.has('description') }"
-              class="form-control"
-              cols="20"
-              id="description"
-              name="description"
-              placeholder="Enter description"
-              required
-              rows="5"
-              v-model="detail.description"
-              v-validate="'required'"
-            />
-          </div>
-          <small
-            class="text-danger mt-1"
-            v-if="errors.has('description')"
-          >{{ errors.first('description') }}</small>
-        </div>
-
-        <div class="input-group">
-          <div class="input-group mb-3 col-md-12">
-            <div class="input-group pull-left">
-              <vue-upload-multiple-image
-                :data-images="detail.images"
-                @before-remove="beforeRemove"
-                @edit-image="editImage"
-                @upload-success="uploadImageSuccess"
-                browseText="Select Product Images"
-                dragText="Browse Image"
-                popupText="Uploaded Image"
-                primaryText="Image"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <label class="text-capitalize ml-3" for="name">
-            Active
-            <!-- <small
-                          :class="!detail.name || errors.has('name') ? 'text-danger' : 'text-success' "
-            >*</small>-->
-          </label>
-          <div class="input-group col-md-12">
-            <switches
-              color="green"
-              theme="bulma"
-              type-bold="false"
-              v-bind:label="detail.is_active === true ? 'Active' : 'Deactive'"
-              v-model="detail.is_active"
-            />
-          </div>
-          <!-- <small
-                        v-if="errors.has('name')"
-                        class="text-danger mt-1"
-          >{{ errors.first('name') }}</small>-->
-        </div>
-      </form>
-    </b-modal>
   </div>
 </template>
 
@@ -510,6 +302,7 @@ export default {
     return {
       currentTab: null,
       statusTabs: [],
+      OrderStatusTabs: Constants.OrderStatusTabs,
 
       baseURL: baseURL,
       allSelectedData: false,
@@ -541,7 +334,6 @@ export default {
     _.each(Constants.OrderStatusTabs, (key, val) => {
       this.statusTabs.push({ name: key.replace(/_/g, " "), id: val });
     });
-    console.log("All tabs", this.statusTabs);
     /** set default to dashboard */
     this.currentTab = this.setDefaultTab();
 
@@ -569,21 +361,6 @@ export default {
       xhr.send();
     },
 
-    uploadImageSuccess(formData, index, fileList) {
-      console.log("Check Data", formData, index, fileList);
-      this.detail.images = fileList;
-    },
-    beforeRemove(index, done, fileList) {
-      this.detail.images = fileList;
-      var r = confirm("remove image");
-      if (r == true) {
-        done();
-      } else {
-      }
-    },
-    editImage(formData, index, fileList) {
-      console.log("edit data", formData, index, fileList);
-    },
     async deleteAllFn() {
       var request = {
         ids: this.selectedIds
@@ -736,7 +513,6 @@ export default {
             //   this.detail.images.push(imageDataIs);
             // });
           });
-          console.log("Data are", this.detail.images);
         }
 
         //         this.detail.images.map(imageUrl => () {
@@ -832,8 +608,6 @@ export default {
         };
         reader.readAsDataURL(input.files[0]);
       }
-
-      // console.log(this.detail.image);
     },
     async submitData() {
       let index;
@@ -846,7 +620,6 @@ export default {
           index = file.path.search("data:image");
           if (index >= 0) {
             let arr = file.path.split(",");
-            console.log("Arr 1", i, arr);
 
             let mime = arr[0].match(/:(.*?);/)[1];
             let bstr = atob(arr[1]);
@@ -893,7 +666,6 @@ export default {
           // this.lists.slice(index, 1, this.$_.clone(res.data));
 
           this.lists[index] = this.$_.clone(res.data);
-          console.log("Updated Record", res.data, this.lists[index]);
 
           Services.notify("s", res.message);
           this.showModal = false;
@@ -983,14 +755,17 @@ export default {
         this.$Progress.fail();
         // Services.notify("e", res.message);
       }
-      console.log("data", this.lists[0]);
     },
     async statusChange(key, value, id) {
+      console.log("Stauts change to => ", key, value, id);
+
       var request = {
         id: id
       };
       if (key == "is_active") {
         request.is_active = value;
+      } else if (key == "status") {
+        request.status = value;
       }
 
       let res = await Services.call(
@@ -1007,7 +782,13 @@ export default {
           Services.notify("e", "Record not found in listing");
           return false;
         }
-        this.lists.slice(index, 1, res.data);
+
+        /** check if status not to current status then remove from list */
+        if (key === "status" && this.currentTab !== res.data.status) {
+          // res.data
+          this.lists.splice(index, 1);
+          this.totalCount--;
+        }
 
         Services.notify("s", res.message);
       } else {

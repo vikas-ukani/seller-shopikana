@@ -71,6 +71,8 @@ export const ApiCollections = {
   },
   users_status_change: { method: "delete", url: api_prefix + "users-status-change" },
   get_users_count_by_type: { method: "get", url: api_prefix + "get-user-count-by-type" },
+
+
   /** Masters Countries countries */
   countries_listing: { method: "POST", url: api_prefix + "countries-list" },
   create_countries: { method: "POST", url: api_prefix + "countries-create" },
@@ -78,10 +80,17 @@ export const ApiCollections = {
   get_countries: { method: "GET", url: api_prefix + "countries-show/" },
   delete_countries: { method: "delete", url: api_prefix + "countries-delete/" },
   countries_status_change: { method: "delete", url: api_prefix + "countries-status-change" },
-  countries_delete_multiple: {
-    method: "POST",
-    url: api_prefix + "countries-status-delete-many"
-  },
+  countries_delete_multiple: { method: "POST", url: api_prefix + "countries-status-delete-many" },
+
+
+  /**Pickup location apis */
+  pickup_location_listing: { method: "POST", url: api_prefix + "pickup-location-list" },
+  create_pickup_location: { method: "POST", url: api_prefix + "pickup-location-create" },
+  update_pickup_location: { method: "put", url: api_prefix + "pickup-location-update/" },
+  get_pickup_location: { method: "GET", url: api_prefix + "pickup-location-show/" },
+  delete_pickup_location: { method: "delete", url: api_prefix + "pickup-location-delete/" },
+  pickup_location_status_change: { method: "delete", url: api_prefix + "pickup-location-status-change" },
+  pickup_location_delete_multiple: { method: "POST", url: api_prefix + "pickup-location-status-delete-many" },
 
 
   /** Masters Complaint categories */
@@ -114,13 +123,13 @@ export const ApiCollections = {
   /**
    * Feature Products List
    */
-  feature_product_list: { method: "POST", url: api_prefix + "feature-product-list" },
-  feature_product_create: { method: "POST", url: api_prefix + "feature-product-create" },
-  feature_product_get: { method: "GET", url: api_prefix + "feature-product-show/" },
-  feature_product_update: { method: "POST", url: api_prefix + "feature-product-update/" },
-  feature_product_delete_multiple: { method: "delete", url: api_prefix + "feature-product-delete-multiple" },
-  feature_product_delete: { method: "get", url: api_prefix + "feature-product-delete/" },
-  feature_product_update_status_change: { method: "POST", url: api_prefix + "feature-product-status-change" },
+  // feature_product_list: { method: "POST", url: api_prefix + "feature-product-list" },
+  // feature_product_create: { method: "POST", url: api_prefix + "feature-product-create" },
+  // feature_product_get: { method: "GET", url: api_prefix + "feature-product-show/" },
+  // feature_product_update: { method: "POST", url: api_prefix + "feature-product-update/" },
+  // feature_product_delete_multiple: { method: "delete", url: api_prefix + "feature-product-delete-multiple" },
+  // feature_product_delete: { method: "get", url: api_prefix + "feature-product-delete/" },
+  // feature_product_update_status_change: { method: "POST", url: api_prefix + "feature-product-status-change" },
 
   /**
    * Product Common Attribute APIs

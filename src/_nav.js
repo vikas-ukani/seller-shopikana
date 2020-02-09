@@ -34,5 +34,15 @@ export default {
         text: 'NEW'
       }
     },
+    {
+      name: "Pickup Location",
+      url: "/pickup-location",
+      icon: "icon-location-pin",
+      // badge: {
+      //   variant: 'warning',
+      //   text: 'NEW'
+      // }
+    },
+
   ]
 };

@@ -110,6 +110,15 @@ export default new Router({
           component: EditProduct,
           beforeEnter: ifAuthenticated
         },
+
+
+        {
+          path: "/pickup-location", // route_prefix +
+          name: "Pickup Location",
+          component: () => import('../views/admin/Masters/PickupLocation'),
+          beforeEnter: ifAuthenticated
+        },
+
         {
           path: "/profile",
           name: "profile",
