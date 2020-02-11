@@ -82,7 +82,6 @@ export const ApiCollections = {
   countries_status_change: { method: "delete", url: api_prefix + "countries-status-change" },
   countries_delete_multiple: { method: "POST", url: api_prefix + "countries-status-delete-many" },
 
-
   /**Pickup location apis */
   pickup_location_listing: { method: "POST", url: api_prefix + "pickup-location-list" },
   create_pickup_location: { method: "POST", url: api_prefix + "pickup-location-create" },
@@ -90,8 +89,7 @@ export const ApiCollections = {
   get_pickup_location: { method: "GET", url: api_prefix + "pickup-location-show/" },
   delete_pickup_location: { method: "delete", url: api_prefix + "pickup-location-delete/" },
   pickup_location_status_change: { method: "delete", url: api_prefix + "pickup-location-status-change" },
-  pickup_location_delete_multiple: { method: "POST", url: api_prefix + "pickup-location-status-delete-many" },
-
+  pickup_location_delete_multiple: { method: "POST", url: api_prefix + "pickup-location-delete-multiple" },
 
   /** Masters Complaint categories */
   complaint_category_listing: { method: "POST", url: api_prefix + "complaint-category-list" },
@@ -154,6 +152,10 @@ export const ApiCollections = {
   orders_delete_multiple: { method: "delete", url: api_prefix + "orders-delete-multiple" },
   orders_delete: { method: "get", url: api_prefix + "orders-delete/" },
   orders_update_status_change: { method: "POST", url: api_prefix + "orders-status-change" },
+
+  /**  Shiporder Make a order */
+  shiporder_make_order: { method: "POST", url: api_prefix + "create-a-order" },
+
 
   /**
    * Offer Modules

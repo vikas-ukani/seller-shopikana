@@ -34,9 +34,7 @@
               @click="currentTab = item.id "
               class="nav-link"
               :class="{ 'active' :  currentTab === item.id }"
-            > {{ item.name }}
-
-            </a>
+            >{{ item.name }}</a>
           </li>
         </ul>
         <!-- <pre>{{currentTab}}</pre> -->
@@ -89,7 +87,7 @@
                           v-bind:src="list.product_details.image"
                           v-if="list.product_details  && list.product_details.image  "
                         />
-                      
+
                         <div
                           data-v-12f0b410
                           class="product-info ml-2 font-sm d-flex flex-column justify-content-between"
@@ -97,8 +95,8 @@
                         >
                           <p
                             class="font-weight-bold"
-                            v-if="list.product_details.name"
-                          >{{list.product_details.name}}</span>
+                            v-if="list.product_details && list.product_details.name"
+                          >{{list.product_details.name}}</p>
                           <div>
                             <p v-if="list.product_details.size">Size: {{list.product_details.size}}</p>
                             <p
@@ -107,7 +105,6 @@
                             <p
                               v-if="list.product_details.sale_price"
                             >Price: {{list.product_details.sale_price}}</p>
-                           
                           </div>
                         </div>
                       </div>
@@ -116,7 +113,7 @@
                   </tr>
                 </table>
               </td>
-           
+
               <td>
                 <small class="font-bold">{{ (list.order_date ) || '-' }}</small>
                 <!-- | 'formatDate' -->
@@ -192,8 +189,8 @@
                       <button
                         v-if="OrderStatusTabs.PENDING === currentTab"
                         class="btn btn-success btn-sm m-1"
-                        @click="statusChange('status', OrderStatusTabs.ACCEPTED, list.id)"
-                      >Approve</button>
+                        @click="approveAnOrder(list)"
+                      >Approve 1</button>
                       <button
                         v-if="OrderStatusTabs.PENDING === currentTab"
                         class="btn btn-danger btn-sm m-1"
@@ -756,6 +753,17 @@ export default {
         // Services.notify("e", res.message);
       }
     },
+
+    async approveAnOrder(order) {
+      console.log("order => ", order);
+
+      let res = await Services.call(ApiCollections.shiporder_make_order).post(
+        order
+      );
+
+      console.log("Request ", res);
+    },
+
     async statusChange(key, value, id) {
       console.log("Stauts change to => ", key, value, id);
 

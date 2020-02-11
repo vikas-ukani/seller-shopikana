@@ -149,6 +149,7 @@
     </div>
 
     <b-modal
+      size="xl"
       :title="((  detail &&  detail.id  ) ? 'Edit ' : 'Add '  )  + $route.name   "
       v-model="showModal"
       okTitle="Save"
@@ -160,15 +161,41 @@
       @ok="submitData"
     >
       <form method="post" novalidate name="addEditForm">
-        <div class="col-md-12">
-          <div class="input-group mb-3">
+        <div class="row">
+          <div class="input-group mb-3 col-md-6">
+            <label for="pickup_location" class="text-capitalize ml-3">
+              Nickname of pickup location
+              <small
+                :class="!detail.pickup_location || errors.has('pickup_location') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="pickup_location"
+                name="pickup_location"
+                required
+                class="form-control"
+                placeholder="Enter pickup_location"
+                v-model="detail.pickup_location"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('pickup_location') }"
+              />
+            </div>
+            <small
+              v-if="errors.has('pickup_location')"
+              class="text-danger mt-1"
+            >{{ errors.first('pickup_location') }}</small>
+          </div>
+
+          <div class="input-group mb-3 col-md-6">
             <label for="name" class="text-capitalize ml-3">
-              name
+              shipper's name
               <small
                 :class="!detail.name || errors.has('name') ? 'text-danger' : 'text-success' "
               >*</small>
             </label>
-            <div class="input-group col-md-12">
+            <div class="input-group">
               <input
                 type="text"
                 id="name"
@@ -183,58 +210,198 @@
             </div>
             <small v-if="errors.has('name')" class="text-danger mt-1">{{ errors.first('name') }}</small>
           </div>
-
-          <div class="input-group mb-3">
-            <label for="code" class="text-capitalize ml-3">
-              code
+        </div>
+        <div class="row">
+          <div class="input-group mb-3 col-md-6">
+            <label for="email" class="text-capitalize ml-3">
+              shipper's email address.
               <small
-                :class="!detail.code || errors.has('code') ? 'text-danger' : 'text-success' "
+                :class="!detail.email || errors.has('email') ? 'text-danger' : 'text-success' "
               >*</small>
             </label>
-            <div class="input-group col-md-12">
+            <div class="input-group">
               <input
                 type="text"
-                id="code"
-                name="code"
-                v-model="detail.code"
-                required="required"
-                placeholder="Enter code"
+                id="email"
+                name="email"
+                required
                 class="form-control"
-                aria-required="true"
-                aria-invalid="true"
-                v-validate="'required|max:2'"
-                :class="{ 'is-invalid': errors.has('code') }"
+                placeholder="Enter email"
+                v-model="detail.email"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('email') }"
               />
             </div>
-            <small v-if="errors.has('code')" class="text-danger mt-1">{{ errors.first('code') }}</small>
+            <small v-if="errors.has('email')" class="text-danger mt-1">{{ errors.first('email') }}</small>
           </div>
-
-          <div class="input-group mb-3">
-            <label for="country_code" class="text-capitalize ml-3">
-              Country code
+          <div class="input-group mb-3 col-md-6">
+            <label for="phone" class="text-capitalize ml-3">
+              Shipper's phone number.
               <small
-                :class="!detail.country_code || errors.has('country_code') ? 'text-danger' : 'text-success' "
+                :class="!detail.phone || errors.has('phone') ? 'text-danger' : 'text-success' "
               >*</small>
             </label>
-            <div class="input-group col-md-12">
+            <div class="input-group">
               <input
                 type="text"
-                id="country_code"
-                name="country_code"
-                v-model="detail.country_code"
-                required="required"
-                placeholder="Enter country code"
+                id="phone"
+                name="phone"
+                required
                 class="form-control"
-                aria-required="true"
-                aria-invalid="true"
+                placeholder="Enter phone"
+                v-model="detail.phone"
                 v-validate="'required'"
-                :class="{ 'is-invalid': errors.has('country_code') }"
+                :class="{ 'is-invalid': errors.has('phone') }"
+              />
+            </div>
+            <small v-if="errors.has('phone')" class="text-danger mt-1">{{ errors.first('phone') }}</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group mb-3 col-md-6">
+            <label for="address" class="text-capitalize ml-3">
+              Shipper's primary address
+              <small
+                :class="!detail.address || errors.has('address') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="address"
+                name="address"
+                required
+                class="form-control"
+                placeholder="Enter address"
+                v-model="detail.address"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('address') }"
               />
             </div>
             <small
-              v-if="errors.has('country_code')"
+              v-if="errors.has('address')"
               class="text-danger mt-1"
-            >{{ errors.first('country_code') }}</small>
+            >{{ errors.first('address') }}</small>
+          </div>
+          <div class="input-group mb-3 col-md-6">
+            <label for="address_2" class="text-capitalize ml-3">
+              Additional address_2 details.
+              <!-- <small
+                :class="!detail.address_2 || errors.has('address_2') ? 'text-danger' : 'text-success' "
+              >*</small>-->
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="address_2"
+                name="address_2"
+                class="form-control"
+                placeholder="Enter address_2"
+                v-model="detail.address_2"
+              />
+            </div>
+            <!-- <small
+              v-if="errors.has('address_2')"
+              class="text-danger mt-1"
+            >{{ errors.first('address_2') }}</small>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group mb-3 col-md-6">
+            <label for="city" class="text-capitalize ml-3">
+              Pickup location city name
+              <small
+                :class="!detail.city || errors.has('city') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="city"
+                name="city"
+                required
+                class="form-control"
+                placeholder="Enter city"
+                v-model="detail.city"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('city') }"
+              />
+            </div>
+            <small v-if="errors.has('city')" class="text-danger mt-1">{{ errors.first('city') }}</small>
+          </div>
+          <div class="input-group mb-3 col-md-6">
+            <label for="state" class="text-capitalize ml-3">
+              Pickup location state name.
+              <small
+                :class="!detail.state || errors.has('state') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="state"
+                name="state"
+                required
+                class="form-control"
+                placeholder="Enter state"
+                v-model="detail.state"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('state') }"
+              />
+            </div>
+            <small v-if="errors.has('state')" class="text-danger mt-1">{{ errors.first('state') }}</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group mb-3 col-md-6">
+            <label for="country" class="text-capitalize ml-3">
+              Pickup location country.
+              <small
+                :class="!detail.country || errors.has('country') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="country"
+                name="country"
+                required
+                class="form-control"
+                placeholder="Enter country"
+                v-model="detail.country"
+                v-validate="'required'"
+                :class="{ 'is-invalid': errors.has('country') }"
+              />
+            </div>
+            <small
+              v-if="errors.has('country')"
+              class="text-danger mt-1"
+            >{{ errors.first('country') }}</small>
+          </div>
+          <div class="input-group mb-3 col-md-6">
+            <label for="pin_code" class="text-capitalize ml-3">
+              Pickup location pincode.
+              <small
+                :class="!detail.pin_code || errors.has('pin_code') ? 'text-danger' : 'text-success' "
+              >*</small>
+            </label>
+            <div class="input-group">
+              <input
+                type="text"
+                id="pin_code"
+                name="pin_code"
+                required
+                class="form-control"
+                placeholder="Enter pin code"
+                v-model="detail.pin_code"
+                v-validate="'required|numeric'"
+                :class="{ 'is-invalid': errors.has('pin_code') }"
+              />
+            </div>
+            <small
+              v-if="errors.has('pin_code')"
+              class="text-danger mt-1"
+            >{{ errors.first('pin_code') }}</small>
           </div>
 
           <div class="input-group mb-3">

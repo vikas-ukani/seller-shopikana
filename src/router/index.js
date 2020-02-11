@@ -14,10 +14,9 @@ import Products from "../views/admin/Masters/Products";
 import AddProduct from "../views/admin/Masters/Products/AddProduct";
 import EditProduct from "../views/admin/Masters/Products/EditProduct";
 
-
 /** Orders */
 import Orders1 from "../views/Widgets";
-import Orders from "../views/admin/Masters/Orders";
+// import Orders from "../views/admin/Masters/Orders";
 import ManageOrders from "../views/admin/Masters/Orders/ManageOrders";
 
 Vue.use(Router);
@@ -79,12 +78,12 @@ export default new Router({
           component: Products,
           beforeEnter: ifAuthenticated
         },
-        {
-          path: "/orders", // route_prefix +
-          name: "orders",
-          component: Orders,
-          beforeEnter: ifAuthenticated
-        },
+        // {
+        //   path: "/orders", // route_prefix +
+        //   name: "orders",
+        //   component: Orders,
+        //   beforeEnter: ifAuthenticated
+        // },
         {
           path: "/order/manage-orders", // route_prefix +
           name: "Manage Orders",

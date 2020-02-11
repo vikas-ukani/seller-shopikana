@@ -72,7 +72,11 @@
             </div>
           </div>
 
-          <div class="input-group col-12 mt-3 border-top pt-3" id="sticky-reference" v-if="detail.category_id">
+          <div
+            class="input-group col-12 mt-3 border-top pt-3"
+            id="sticky-reference"
+            v-if="detail.category_id"
+          >
             <div class="mb-3 col-md-12 font-dark pl-0">
               <h5 class="font-weight-bolder">Step 2: Product Information.</h5>
             </div>
@@ -141,7 +145,6 @@
                     :multiple="true"
                     :options="color_attributes"
                     :taggable="true"
-
                     id="color"
                     label="name"
                     placeholder="Search or add a tag"
@@ -160,8 +163,7 @@
                     @click="makeStockInputDetails"
                     class="btn btn-danger"
                     type="button"
-                  >Confirm
-                  </button>
+                  >Confirm</button>
                 </div>
               </div>
             </div>
@@ -170,20 +172,21 @@
           <div class="input-group col-12 mt-3 border-top pt-3">
             <div class="mb-3 col-md-12 font-dark pl-0">
               <h5 class="font-weight-bolder">Step 4: Product Stock Details</h5>
-              <span class="text-danger ml-2 mb-0 font-weight-bold font-italic">Select product attributes first,</span>
+              <span
+                class="text-danger ml-2 mb-0 font-weight-bold font-italic"
+              >Select product attributes first,</span>
             </div>
             <div class="pb-2 border-dark mb-4 col-12">
-              <ProductStockDetailsTable :stock_inventories="detail.stock_inventories"/>
+              <ProductStockDetailsTable :stock_inventories="detail.stock_inventories" />
             </div>
           </div>
 
           <div class="input-group col-12 mt-3 border-top pt-3" v-if="detail.category_id">
             <h5 class="mb-3">Description</h5>
             <div class="pb-2 border-dark mb-4 col-12">
-              <vue-editor id="editor" v-model="detail.description"/>
+              <vue-editor id="editor" v-model="detail.description" />
             </div>
           </div>
-
 
           <div class="input-group col-12 mt-3 pt-3 pb-5" v-if="detail.category_id">
             <div class="input-group mb-3">
@@ -200,7 +203,6 @@
             </div>
           </div>
 
-
           <div class="col-12" v-if="detail.category_id">
             <div class="pull-right">
               <button @click="clearAllData()" class="btn btn-danger mr-2" type="button">Cancel</button>
@@ -209,8 +211,7 @@
                 @click="submitData"
                 class="btn btn-success"
                 type="button"
-              >Submit
-              </button>
+              >Submit</button>
             </div>
           </div>
         </form>
