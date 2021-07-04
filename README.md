@@ -68,4 +68,3 @@ CoreUI-Vue/
 ├── LICENSE
 └── package.json         # build scripts and dependencies
 ```
-# Initial Commit in Seller Shopikana site.
